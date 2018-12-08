@@ -1,9 +1,11 @@
 fn main() {
     let s1 = gives_ownership();
-    let s2 = String::from("hello world");
-    let s3 = takes_and_gives_back(s2);
-
-    references_and_borrowing();
+    let s2 = String::from("helloe");
+//    let s3 = takes_and_gives_back(s2);
+//
+//    references_and_borrowing();
+    let te = first_word(&s2);
+    println!("{}", te)
 }
 
 fn gives_ownership() -> String {
@@ -32,4 +34,16 @@ fn calculate_length(s:&String) -> usize{
 
 fn modify_reference_value( s:&mut String){
     s.push_str("__multiverse");
+}
+
+fn first_word(s: &String) -> usize{
+    let bytes = s.as_bytes();
+
+    for(i, &item) in bytes.iter().enumerate(){
+        if item == b' ' {
+            return  i
+        }
+
+    }
+    s.len()
 }

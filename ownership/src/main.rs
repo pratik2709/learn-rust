@@ -3,8 +3,7 @@ fn main() {
     let s2 = String::from("hello world");
     let s3 = takes_and_gives_back(s2);
 
-    let x=5;
-    makes_copy(x);
+    references_and_borrowing();
 }
 
 fn gives_ownership() -> String {
@@ -17,6 +16,20 @@ fn takes_and_gives_back(some_string: String) -> String{
 
 }
 
-fn makes_copy(num: u32){
-    println!("{}", num);
+
+fn references_and_borrowing(){
+    let mut s1 = String::from("reference");
+    let len = calculate_length(&s1);
+    modify_reference_value(&mut s1);
+    let len1 = calculate_length(&s1);
+    println!("{}, length: {}, l2: {}", s1, len, len1);
+
+}
+
+fn calculate_length(s:&String) -> usize{
+    s.len()
+}
+
+fn modify_reference_value( s:&mut String){
+    s.push_str("__multiverse");
 }

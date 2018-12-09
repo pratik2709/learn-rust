@@ -1,16 +1,20 @@
-struct rectangle  {
+#[derive(Debug)]
+struct Rectangle {
     width:u32,
     height:u32
 
 }
 
+impl Rectangle {
+    fn calculate_area(&self) -> u32{
+        self.width * self.height
+    }
+}
+
 fn main() {
-    let rect = rectangle { width: 10, height: 30};
+    let rect = Rectangle { width: 13, height: 30};
 
-    let area = calculate_area(&rect);
-    println!("Area is:: {}", area)
+    println!("Area is:: {:?}", rect.calculate_area())
 }
 
-fn calculate_area(dimensions: &rectangle) -> u32 {
-    dimensions.width * dimensions.height
-}
+

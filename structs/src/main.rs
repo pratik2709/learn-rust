@@ -1,10 +1,16 @@
-fn main() {
-    let rect = (10,20);
+struct rectangle  {
+    width:u32,
+    height:u32
 
-    let area = calculate_area(rect);
+}
+
+fn main() {
+    let rect = rectangle { width: 10, height: 30};
+
+    let area = calculate_area(&rect);
     println!("Area is:: {}", area)
 }
 
-fn calculate_area(dimensions:(i32,i32)) -> i32{
-    dimensions.0 * dimensions.1
+fn calculate_area(dimensions: &rectangle) -> u32 {
+    dimensions.width * dimensions.height
 }

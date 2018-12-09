@@ -1,6 +1,6 @@
 fn main() {
     let s1 = gives_ownership();
-    let s2 = String::from("helloe");
+    let s2 = String::from("helloet  tr");
 //    let s3 = takes_and_gives_back(s2);
 //
 //    references_and_borrowing();
@@ -36,14 +36,15 @@ fn modify_reference_value( s:&mut String){
     s.push_str("__multiverse");
 }
 
-fn first_word(s: &String) -> usize{
+//“string slice” is written as &str:
+fn first_word(s: &String) -> &str{
     let bytes = s.as_bytes();
 
     for(i, &item) in bytes.iter().enumerate(){
         if item == b' ' {
-            return  i
+            return &s[0..i]
         }
 
     }
-    s.len()
+    &s[..]
 }

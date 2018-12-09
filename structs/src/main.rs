@@ -20,6 +20,10 @@ impl Rectangle {
             false
         }
     }
+
+    fn create_square(size:u32) -> Rectangle{
+        Rectangle {width:size, height:size}
+    }
 }
 
 fn main() {
@@ -27,7 +31,11 @@ fn main() {
     let rect2 = Rectangle { width: 500, height: 100};
 
 //    println!("Area is:: {:?}", rect.calculate_area());
+    //rect2.width uses copy ?
+    let rect3 = Rectangle::create_square(rect2.width);
     println!("Can hold:: {:?}", rect1.can_hold(&rect2));
+
+    println!("Square size:: {:?}", rect3)
 }
 
 

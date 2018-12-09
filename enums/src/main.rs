@@ -18,6 +18,11 @@ fn main() {
 
 
     println!("This enum:: {:?}", handle_null(Option::Some(3)));
+
+    let some_value = Some(4);
+    if let Some(3) = some_value{
+        println!("this is a test");
+    }
 }
 
 fn which_address(ipaddress:Ipaddress) -> u32{

@@ -1,3 +1,4 @@
+mod sound;
 mod plant{
     pub mod vegetable{
 
@@ -30,14 +31,26 @@ mod plant{
     }
 }
 
+use std::collections::HashMap;
+
+
+
 fn main() {
+    //use absolute paths mostly
     use crate::plant::vegetable::music;
     music::piano();
     plant::vegetable::test_mod();
     //absolute path
     crate::plant::vegetable::test_mod();
     let t = plant::vegetable::plant_types::set_plant_details();
-    println!("{:?}", t.name)
+    println!("{:?}", t.name);
+
+    let mut hashmap = HashMap::new();
+    hashmap.insert(1,2);
+    println!("{:?}", hashmap);
+
+    use crate::sound::guitar::strings;
+    strings::play_guitar();
 }
 
 fn plants_rise(){

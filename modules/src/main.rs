@@ -1,8 +1,14 @@
 mod plant{
     pub mod vegetable{
+
+        pub mod music{
+            pub fn piano(){
+                println!("playing piano")
+            }
+        }
         #[derive(Debug)]
         pub struct plant_types{
-            name: String,
+            pub name: String,
             size: i32,
         }
 
@@ -25,11 +31,13 @@ mod plant{
 }
 
 fn main() {
+    use crate::plant::vegetable::music;
+    music::piano();
     plant::vegetable::test_mod();
     //absolute path
     crate::plant::vegetable::test_mod();
     let t = plant::vegetable::plant_types::set_plant_details();
-    println!("{:?}", t)
+    println!("{:?}", t.name)
 }
 
 fn plants_rise(){

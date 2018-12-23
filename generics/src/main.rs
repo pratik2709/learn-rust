@@ -67,6 +67,9 @@ fn main() {
         author: String::from("prat"),
     };
     println!("{}",n.summarize());
+
+    notify(&n);
+    notify_trait_bound(&n);
 }
 
 
@@ -81,6 +84,14 @@ impl Summary for NewsFeed {
     fn summarize_author(&self) -> String {
         format!("Summarising author:: {}, {}", self.location, self.date)
     }
+}
+
+pub fn notify(item: &impl Summary){
+    println!(" Notifying:: {}", item.summarize());
+}
+
+pub fn notify_trait_bound<T: Summary>(item: &T){
+    println!(" Notifying trait bound:: {}", item.summarize());
 }
 
 pub trait Summary {

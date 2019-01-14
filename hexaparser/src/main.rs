@@ -1,6 +1,7 @@
 use std::env;
 use std::fs;
 use std::process;
+use std::error::Error;
 
 fn main() {
     //first will be the name of the binary
@@ -15,8 +16,16 @@ fn main() {
 
     println!("args are:: {} and {}", config.query, config.filename);
 
-    let contents = fs::read_to_string(config.filename).expect("something went wrong");
+    if let Err(e) = run(config){
+        println!("App error {}", e);
+        process::exit(1);
+    }
+}
+
+fn run(config: Config) ->  Result<(), Box<dyn Error>> {
+    let contents = fs::read_to_string(config.filename)?;
     println!("file contents:\n {}", contents);
+    Ok(())
 }
 
 struct Config {

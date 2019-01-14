@@ -37,15 +37,15 @@ fn longest_string<'a>(s1: &'a str, s2: &'a str) -> &'a str{
 //    test.as_str()
 //}
 #[derive(Debug)]
-struct ImportantSentence{
-    name: String,
+struct ImportantSentence<'a>{
+    name: &'a str,
 }
 
 fn test_important_sentence() -> ImportantSentence{
     let sen = String::from("testing sentences. total");
     let reff = sen.split(".").next().expect("could not find a .");
     let c = ImportantSentence{
-        name:reff.to_string(),
+        name:reff,
     };
     c
 }

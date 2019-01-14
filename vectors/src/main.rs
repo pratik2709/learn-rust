@@ -24,4 +24,17 @@ fn main() {
         *i *= 5;
         println!("{}", i);
     }
+
+    #[derive(Debug)]
+    enum SpreadSheet{
+        Int(i32),
+        Float(f64),
+        Text(String)
+    }
+
+    let row = vec![SpreadSheet::Int(1), SpreadSheet::Float(2.4)];
+
+    for i in &row{
+        println!("{:?}", i);
+    }
 }

@@ -5,14 +5,21 @@ fn main(){
     //first will be the name of the binary
     let args: Vec<String> = env::args().collect();
 
-    let (query, filename) = parse_args(&args);
+    let config = parse_args(&args);
 
-    let contents = fs::read_to_string(filename).expect("something went wrong");
+    println!("args are:: {} and {}", config.query, config.filename);
+
+    let contents = fs::read_to_string(config.filename).expect("something went wrong");
     println!("file contents:\n {}", contents);
 }
 
-fn parse_args(args: &[String]) -> (&str, &str){
-    let query: &str = &args[1];
-    let filename: &str = &args[2];
-    (query, filename)
+struct Config{
+    query: String,
+    filename: String
+}
+
+fn parse_args(args: &[String]) -> Config{
+    let query = args[1].clone();
+    let filename= args[2].clone();
+    Config { query, filename }
 }

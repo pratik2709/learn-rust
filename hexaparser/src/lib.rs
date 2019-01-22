@@ -23,15 +23,11 @@ pub fn run(config: Config) ->  Result<(), Box<dyn Error>> {
     };
 
 
-//    match actual_file.write_all(encode_hex(contents.as_bytes()).as_bytes()){
-//        Err(why) => panic!("cannot write {}", why.description()),
-//        Ok(actual_file) => println!("Written")
-//    }
-
     let wbyl = words_by_line(&contents);
 
     for ww in &wbyl{
         for w in ww{
+            actual_file.write("0x-A0".as_bytes())?;
             actual_file.write(encode_hex(w.as_bytes()).as_bytes())?;
         }
     }

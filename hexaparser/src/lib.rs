@@ -23,22 +23,30 @@ pub fn run(config: Config) ->  Result<(), Box<dyn Error>> {
     };
 
 
-    match actual_file.write_all(encode_hex(contents.as_bytes()).as_bytes()){
-        Err(why) => panic!("cannot write {}", why.description()),
-        Ok(actual_file) => println!("Written")
+//    match actual_file.write_all(encode_hex(contents.as_bytes()).as_bytes()){
+//        Err(why) => panic!("cannot write {}", why.description()),
+//        Ok(actual_file) => println!("Written")
+//    }
+
+    let wbyl = words_by_line(&contents);
+
+    for ww in &wbyl{
+        for w in ww{
+            actual_file.write(encode_hex(w.as_bytes()).as_bytes())?;
+        }
     }
 
     let re = Regex::new("[\\p{Punct}\\p{IsPunctuation}]").unwrap();
-    assert!(re.is_match("A"));
+    assert!(re.is_match("!"));
 
     Ok(())
 }
 
-//fn words_by_line(stringBuffer:&str){
-//    stringBuffer.lines().map(|line|{
-//        line.split_whitespace().collect()
-//    }).collect()
-//}
+fn words_by_line<'a>(stringBuffer:&'a str) -> Vec<Vec<& 'a str>>{
+    stringBuffer.lines().map(|line|{
+        line.split_whitespace().collect()
+    }).collect()
+}
 
 pub fn encode_hex(bytes: &[u8]) -> String {
     use std::fmt::Write;
@@ -46,7 +54,7 @@ pub fn encode_hex(bytes: &[u8]) -> String {
     for &b in bytes {
         write!(&mut s, "{:02x}", b);
     }
-    s
+    String::from("0x-") + &s
 }
 
 pub struct Config {

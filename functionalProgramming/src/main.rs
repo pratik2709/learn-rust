@@ -28,7 +28,7 @@ impl<T> Cacher<T>  where T: Fn(u32) -> u32{
 }
 
 fn main(){
-  generate_workout(1,2);
+  generate_workout(5,2);
 }
 
 
@@ -40,15 +40,15 @@ fn generate_workout(intensity:u32, random_number:u32){
   });
 
   if intensity < 25 {
-    expensive_func.value;
-    println!("calling again:: {:?}", expensive_func.value);
+    expensive_func.value(intensity);
+    println!("calling again:: {:?}", expensive_func.value(intensity));
   }
   else{
     if random_number == 3{
       println!("take a break");
     }
     else{
-      expensive_func.value;
+      expensive_func.value(intensity);
     }
   }
 

@@ -27,8 +27,9 @@ pub fn run(config: Config) ->  Result<(), Box<dyn Error>> {
 
     for ww in &wbyl{
         for w in ww{
-            actual_file.write("0x-A0".as_bytes())?;
+            actual_file.write("0xA0".as_bytes())?;
             actual_file.write(encode_hex(w.as_bytes()).as_bytes())?;
+            actual_file.write("".as_bytes())?;
         }
     }
 
@@ -50,7 +51,7 @@ pub fn encode_hex(bytes: &[u8]) -> String {
     for &b in bytes {
         write!(&mut s, "{:02x}", b);
     }
-    String::from("0x-") + &s
+    String::from("0x") + &s
 }
 
 pub struct Config {

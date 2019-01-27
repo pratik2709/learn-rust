@@ -10,8 +10,6 @@ use std::io::Write;
 use regex::Regex;
 
 
-
-
 pub fn run(config: Config) ->  Result<(), Box<dyn Error>> {
     let contents = fs::read_to_string(config.filename)?;
     println!("file contents:\n {}", contents);
@@ -31,6 +29,7 @@ pub fn run(config: Config) ->  Result<(), Box<dyn Error>> {
             actual_file.write(encode_hex(w.as_bytes()).as_bytes())?;
             actual_file.write("".as_bytes())?;
         }
+        actual_file.write("0x0A".as_bytes())?;
     }
 
     let re = Regex::new("[\\p{Punct}\\p{IsPunctuation}]").unwrap();

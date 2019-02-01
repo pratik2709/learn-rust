@@ -15,7 +15,7 @@ fn main() {
     });
 
 
-    println!("args are:: {} and {}", config.query, config.filename);
+    println!("filename to read is:: {}", config.filename);
 
     if let Err(e) = run(config){
         println!("App error {}", e);

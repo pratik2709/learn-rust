@@ -54,17 +54,15 @@ pub fn encode_hex(bytes: &[u8]) -> String {
 }
 
 pub struct Config {
-    pub query: String,
     pub filename: String,
 }
 
 impl Config {
     pub fn new(args: &[String]) -> Result<Config, &'static str> {
-        if args.len() < 3{
+        if args.len() < 1{
             return Err("arguments not complete");
         }
-        let query = args[1].clone();
-        let filename = args[2].clone();
-        Ok(Config { query, filename })
+        let filename = args[1].clone();
+        Ok(Config { filename })
     }
 }

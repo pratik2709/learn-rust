@@ -10,6 +10,12 @@ fn main() {
   let t:Vec<_> = v1.iter().map(|x| x+1).collect();
   println!("{:?}", t);
   shoe_main();
+
+  println!("{:?}",Counter::new());
+  let mut c = Counter::new();
+  println!("{:?}",c.next());
+  println!("{:?}",c.next());
+  println!("{:?}",c.next());
 }
 
 #[derive(Debug)]
@@ -29,4 +35,32 @@ fn shoe_main(){
     Shoe{name:String::from("t3"), size:10},
     ];
   println!("{:?}",find_my_shoe(s,10));
+}
+
+
+
+#[derive(Debug)]
+struct Counter{
+  count:u32,
+}
+
+impl Counter{
+  fn new() -> Counter{
+    Counter{count:0}
+  }
+}
+
+impl Iterator for Counter{
+  type Item = u32;
+
+  fn next(&mut self) -> Option<Self::Item>{
+    self.count += 1;
+    if self.count < 3{
+      Some(self.count)
+    }
+    else{
+      None
+    }
+
+  }
 }

@@ -9,7 +9,7 @@ fn main() {
     //first will be the name of the binary
 
     let config = Config::new(env::args()).unwrap_or_else(|err| {
-        println!("Something went seriously wrong {}", err);
+        println!("Something went seriously wrong:: {}", err);
         process::exit(1);
     });
 

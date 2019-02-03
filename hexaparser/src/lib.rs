@@ -1,7 +1,6 @@
 extern crate regex;
 use std::error::Error;
 use std::fs;
-use std::ascii;
 
 use std::path::Path;
 use std::fs::File;
@@ -14,19 +13,19 @@ pub fn run(config: Config) ->  Result<(), Box<dyn Error>> {
     let contents = fs::read_to_string(config.filename)?;
     println!("file contents:\n {}", contents);
 
-    let actualPath = Path::new("output.txt");
-    let mut actual_file = match File::create(&actualPath) {
+    let actual_path = Path::new("output.txt");
+    let mut actual_file = match File::create(&actual_path) {
         Err(why) => panic!("Something went wrong while writing file {}", why.description()),
         Ok(actual_file) => actual_file,
     };
 
 
-    let wbyl = words_by_line(&contents);
+    let line_by_line_word_reader = words_by_line(&contents);
 
-    for ww in &wbyl{
-        for w in ww{
+    for words in &line_by_line_word_reader{
+        for word in words{
             actual_file.write("0xA0".as_bytes())?;
-            actual_file.write(encode_hex(w.as_bytes()).as_bytes())?;
+            actual_file.write(encode_hex(word.as_bytes()).as_bytes())?;
             actual_file.write("".as_bytes())?;
         }
         actual_file.write("0x0A".as_bytes())?;
@@ -38,19 +37,19 @@ pub fn run(config: Config) ->  Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-fn words_by_line<'a>(stringBuffer:&'a str) -> Vec<Vec<& 'a str>>{
-    stringBuffer.lines().map(|line|{
+fn words_by_line<'a>(string_buffer:&'a str) -> Vec<Vec<& 'a str>>{
+    string_buffer.lines().map(|line|{
         line.split_whitespace().collect()
     }).collect()
 }
 
 pub fn encode_hex(bytes: &[u8]) -> String {
     use std::fmt::Write;
-    let mut s = String::with_capacity(bytes.len() * 2);
-    for &b in bytes {
-        write!(&mut s, "{:02x}", b);
+    let mut encoded_String = String::with_capacity(bytes.len() * 2);
+    for &byte in bytes {
+        write!(&mut encoded_String, "{:02x}", byte);
     }
-    String::from("0x") + &s
+    String::from("0x") + &encoded_String
 }
 
 pub struct Config {
@@ -59,11 +58,11 @@ pub struct Config {
 
 impl Config {
     pub fn new(mut args:std::env::Args) -> Result<Config, &'static str> {
-        args.next(); //first one is obj?
+        args.next();
         let filename = match args.next() {
-            Some(f) => f,
+            Some(filename) => filename,
             None => {
-                return Err("Didn't get a query string")
+                return Err("Did not get a file name")
             }
         };
         Ok(Config { filename })

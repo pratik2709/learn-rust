@@ -58,11 +58,14 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn new(args: &[String]) -> Result<Config, &'static str> {
-        if args.len() < 1{
-            return Err("arguments not complete");
-        }
-        let filename = args[1].clone();
+    pub fn new(mut args:std::env::Args) -> Result<Config, &'static str> {
+        args.next(); //first one is obj?
+        let filename = match args.next() {
+            Some(f) => f,
+            None => {
+                return Err("Didn't get a query string")
+            }
+        };
         Ok(Config { filename })
     }
 }

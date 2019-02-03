@@ -45,11 +45,11 @@ fn words_by_line<'a>(string_buffer:&'a str) -> Vec<Vec<& 'a str>>{
 
 pub fn encode_hex(bytes: &[u8]) -> String {
     use std::fmt::Write;
-    let mut encoded_String = String::with_capacity(bytes.len() * 2);
+    let mut encoded_string = String::with_capacity(bytes.len() * 2);
     for &byte in bytes {
-        write!(&mut encoded_String, "{:02x}", byte);
+        write!(&mut encoded_string, "{:02x}", byte);
     }
-    String::from("0x") + &encoded_String
+    String::from("0x") + &encoded_string
 }
 
 pub struct Config {

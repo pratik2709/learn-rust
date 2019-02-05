@@ -1,15 +1,15 @@
 extern crate regex;
-use std::error::Error;
-use std::fs;
-
-use std::path::Path;
-use std::fs::File;
-use std::io::Write;
 
 use regex::Regex;
+use std::error::Error;
+use std::fs;
+use std::fs::File;
+use std::io::Write;
+use std::path::Path;
 
+include!("config.rs");
 
-pub fn run(config: Config) ->  Result<(), Box<dyn Error>> {
+pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     let contents = fs::read_to_string(config.filename)?;
     println!("file contents:\n {}", contents);
 
@@ -22,8 +22,8 @@ pub fn run(config: Config) ->  Result<(), Box<dyn Error>> {
 
     let line_by_line_word_reader = words_by_line(&contents);
 
-    for words in &line_by_line_word_reader{
-        for word in words{
+    for words in &line_by_line_word_reader {
+        for word in words {
             actual_file.write("0xA0".as_bytes())?;
             actual_file.write(encode_hex(word.as_bytes()).as_bytes())?;
             actual_file.write("".as_bytes())?;
@@ -37,8 +37,8 @@ pub fn run(config: Config) ->  Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-fn words_by_line<'a>(string_buffer:&'a str) -> Vec<Vec<& 'a str>>{
-    string_buffer.lines().map(|line|{
+fn words_by_line<'a>(string_buffer: &'a str) -> Vec<Vec<&'a str>> {
+    string_buffer.lines().map(|line| {
         line.split_whitespace().collect()
     }).collect()
 }
@@ -52,19 +52,3 @@ pub fn encode_hex(bytes: &[u8]) -> String {
     String::from("0x") + &encoded_string
 }
 
-pub struct Config {
-    pub filename: String,
-}
-
-impl Config {
-    pub fn new(mut args:std::env::Args) -> Result<Config, &'static str> {
-        args.next();
-        let filename = match args.next() {
-            Some(filename) => filename,
-            None => {
-                return Err("Did not get a file name")
-            }
-        };
-        Ok(Config { filename })
-    }
-}

@@ -10,3 +10,5 @@ The other difference between mut and shadowing is that because we’re effective
 In computer science, an integer literal is a kind of literal for an integer whose value is directly represented in source code
 
  If you add a semicolon to the end of an expression, you turn it into a statement, which will then not return a value. 
+ 
+ https://codebeautify.org/hex-string-converter

@@ -12,3 +12,7 @@ In computer science, an integer literal is a kind of literal for an integer whos
  If you add a semicolon to the end of an expression, you turn it into a statement, which will then not return a value. 
  
  https://codebeautify.org/hex-string-converter
+ 
+ 
+Webserver: 
+https://learning-rust.github.io/docs/e4.unwrap_and_expect.html

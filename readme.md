@@ -16,3 +16,7 @@ In computer science, an integer literal is a kind of literal for an integer whos
  
 Webserver: 
 https://learning-rust.github.io/docs/e4.unwrap_and_expect.html
+https://stackoverflow.com/questions/32304595/whats-the-difference-between-self-and-self
+https://medium.com/@jimmco/strings-in-rust-8cc9ea07560b
+https://stackoverflow.com/questions/50987084/why-was-the-dyn-syntax-introduced
+https://doc.rust-lang.org/book/ch06-03-if-let.html

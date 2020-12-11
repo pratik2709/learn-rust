@@ -20,3 +20,5 @@ https://stackoverflow.com/questions/32304595/whats-the-difference-between-self-a
 https://medium.com/@jimmco/strings-in-rust-8cc9ea07560b
 https://stackoverflow.com/questions/50987084/why-was-the-dyn-syntax-introduced
 https://doc.rust-lang.org/book/ch06-03-if-let.html
+
+cargo new nom --bin

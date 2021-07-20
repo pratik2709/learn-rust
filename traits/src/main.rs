@@ -1,3 +1,10 @@
+include!("lib.rs");
+
 fn main() {
-    println!("Hello, world!");
+    let tweet = Tweet{
+        username: String::from("twttr"),
+        content: String::from("first tweet ever")
+    };
+
+    println!("Summarize tweet: {}", tweet.summarize());
 }

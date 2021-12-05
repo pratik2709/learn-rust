@@ -1,0 +1,9 @@
+[package]
+name = "hexaparser"
+version = "0.1.0"
+authors = ["pratiksaxena <pratik2709@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+hex = "0.3.2"
+regex = "1"

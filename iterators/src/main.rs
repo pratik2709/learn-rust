@@ -16,6 +16,19 @@ fn main() {
   println!("{:?}",c.next());
   println!("{:?}",c.next());
   println!("{:?}",c.next());
+  iterate_example();
+}
+
+fn iterate_example(){
+  let needle = 0xCB;
+  println!("{:b}", needle);
+  let hackstack = [1, 1, 2, 5, 15, 52, 203, 877, 4140, 21147];
+  //into_iter returns items by value
+  for item in hackstack.iter(){
+    if *item == needle{
+      println!("item found:: {}", item)
+    }
+  }
 }
 
 #[derive(Debug)]

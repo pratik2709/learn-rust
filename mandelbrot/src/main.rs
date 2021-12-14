@@ -24,6 +24,21 @@ fn calculate_mandelbrot(max_iters: usize,
 }
 
 fn mandelbrot_at_point(cx: f64, cy: f64, max_iters: usize) -> usize {
-    todo!()
+    let mut z = Complex {re: 0.0, im: 0.0};
+    let c = Complex::new(cx, cy);
+
+    for i in 0..=max_iters {
+        if z.norm() > 2.0 {
+            return i;
+        }
+        z = z * z + c;
+    }
+    return max_iters
 }
 
+fn render_mandelbrot(escape_vals : Vec<Vec<usize>>){
+    for row in escape_vals{
+        let mut line = String::with_capacity();
+    }
+
+}

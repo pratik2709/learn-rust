@@ -21,7 +21,7 @@ fn calculate_mandelbrot(max_iters: usize,
                         y_max: f64,
                         width: usize,
                         height: usize) -> Vec<Vec<usize>> {
-    let mut img = image::RgbImage::new(500, 500);
+    let mut img = image::RgbImage::new(width as u32, height as u32);
     let mut all_rows: Vec<Vec<usize>> = Vec::with_capacity(width);
     for img_y in 0..height {
         let mut row: Vec<usize> = Vec::with_capacity(height);
@@ -31,11 +31,13 @@ fn calculate_mandelbrot(max_iters: usize,
             let escaped_at = mandelbrot_at_point(cx, cy, max_iters);
             row.push(escaped_at);
             let rgb = get_color(escaped_at as u32, max_iters as u32);
-            img.put_pixel(img_y as u32, img_x as u32, rgb)
+            img.put_pixel(img_x as u32,img_y as u32, rgb)
         }
         all_rows.push(row);
     }
-    // img.save_with_format()
+    let fname = format!("mandelbrot.png");
+    img.save_with_format(fname, image::ImageFormat::Png)
+        .unwrap();
     all_rows
 }
 

@@ -56,27 +56,6 @@ fn mandelbrot_at_point(cx: f64, cy: f64, max_iters: usize) -> u32 {
     return max_iters as u32;
 }
 
-fn render_mandelbrot(escape_vals: Vec<Vec<u32>>) {
-    for row in escape_vals {
-        let mut line = String::with_capacity(row.len());
-        for column in row {
-            let val = match column {
-                0..=2 => ' ',
-                2..=5 => '.',
-                5..=10 => '•',
-                11..=30 => '*',
-                30..=100 => '+',
-                100..=200 => 'x',
-                200..=400 => '$',
-                400..=700 => '#',
-                _ => '%',
-            };
-            line.push(val);
-        }
-        println!("{}", line);
-    }
-}
-
 
 fn main() {
     let width: u32 = 1920;
@@ -85,8 +64,7 @@ fn main() {
     let x_max: f64 = 0.8;
     let y_min: f64 = ((x_min - x_max) * 0.5 * height as f64)/ width as f64;
     let y_max: f64 = (0.0 - y_min as f64) + 0.01;
-    let max_iters: usize = 500;
-    let mandelbrot = calculate_mandelbrot(
+    let max_iters: usize = 1000;
+    calculate_mandelbrot(
         max_iters, x_min, x_max, y_min, y_max, width, height);
-    render_mandelbrot(mandelbrot);
 }

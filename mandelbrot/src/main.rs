@@ -19,12 +19,12 @@ fn calculate_mandelbrot(max_iters: usize,
                         x_max: f64,
                         y_min: f64,
                         y_max: f64,
-                        width: usize,
-                        height: usize) -> Vec<Vec<usize>> {
+                        width: u32,
+                        height: u32) -> Vec<Vec<u32>> {
     let mut img = image::RgbImage::new(width as u32, height as u32);
-    let mut all_rows: Vec<Vec<usize>> = Vec::with_capacity(width);
+    let mut all_rows: Vec<Vec<u32>> = Vec::with_capacity(width as usize);
     for img_y in 0..height {
-        let mut row: Vec<usize> = Vec::with_capacity(height);
+        let mut row: Vec<u32> = Vec::with_capacity(height as usize);
         for img_x in 0..width {
             let cx = x_min + (x_max - x_min) * (img_x as f64 / width as f64);
             let cy = y_min + (y_max - y_min) * (img_y as f64 / height as f64);
@@ -41,7 +41,7 @@ fn calculate_mandelbrot(max_iters: usize,
     all_rows
 }
 
-fn mandelbrot_at_point(cx: f64, cy: f64, max_iters: usize) -> usize {
+fn mandelbrot_at_point(cx: f64, cy: f64, max_iters: usize) -> u32 {
     let mut z = Complex { re: 0.0, im: 0.0 };
     let c = Complex::new(cx, cy);
 
@@ -49,14 +49,14 @@ fn mandelbrot_at_point(cx: f64, cy: f64, max_iters: usize) -> usize {
         // find absolute value of the imaginary number
         // greater than 2 indicates it will continue growing infinitely
         if z.norm() > 2.0 {
-            return i;
+            return i as u32;
         }
         z = z * z + c;
     }
-    return max_iters;
+    return max_iters as u32;
 }
 
-fn render_mandelbrot(escape_vals: Vec<Vec<usize>>) {
+fn render_mandelbrot(escape_vals: Vec<Vec<u32>>) {
     for row in escape_vals {
         let mut line = String::with_capacity(row.len());
         for column in row {
@@ -79,7 +79,14 @@ fn render_mandelbrot(escape_vals: Vec<Vec<usize>>) {
 
 
 fn main() {
+    let width: u32 = 1920;
+    let height: u32 = 1300;
+    let x_min: f64 = -2.1;
+    let x_max: f64 = 0.8;
+    let y_min: f64 = ((x_min - x_max) * 0.5 * height as f64)/ width as f64;
+    let y_max: f64 = (0.0 - y_min as f64) + 0.01;
+    let max_iters: usize = 500;
     let mandelbrot = calculate_mandelbrot(
-        1000, -2.0, 1.0, -1.0, 1.0, 100, 24);
+        max_iters, x_min, x_max, y_min, y_max, width, height);
     render_mandelbrot(mandelbrot);
 }

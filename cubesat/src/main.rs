@@ -17,6 +17,10 @@ impl GroundStation{
     fn send(&self, to: &mut CubeSat, msg: Message){
         to.mailbox.messages.push(msg);
     }
+
+    fn connect(&self, sat_id: u64) -> CubeSat{
+        CubeSat{id: sat_id, mailbox: MailBox{messages: vec![]}}
+    }
 }
 
 impl CubeSat{

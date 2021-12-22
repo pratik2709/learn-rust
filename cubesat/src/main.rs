@@ -39,6 +39,10 @@ fn check_status(sat_id: CubeSat) -> CubeSat{
     sat_id
 }
 
+fn fetch_sat_ids() -> Vec<u64>{
+    vec![1,2,3]
+}
+
 fn main() {
     let base = GroundStation{};
 

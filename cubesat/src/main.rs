@@ -46,15 +46,21 @@ fn fetch_sat_ids() -> Vec<u64>{
 fn main() {
     let base = GroundStation{};
 
-    let mut sat_a: CubeSat = CubeSat{ id: 0, mailbox: MailBox {messages: vec![]}};
-    let sat_b = CubeSat{ id: 1, mailbox: MailBox {messages: vec![]}};
-    let sat_c = CubeSat{ id: 2, mailbox: MailBox {messages: vec![]}};
-
-    base.send(&mut sat_a,Message::from("hello world"));
-    base.send(&mut sat_a,Message::from("hello world2"));
-    println!("t1: {:?}", sat_a);
-
-    let msg = sat_a.recv();
-    println!("{:?}", msg);
+    let sat_ids = fetch_sat_ids();
+    for sat_id in sat_ids{
+        let mut sat = base.connect(sat_id);
+        base.send(&mut sat, Message::from("hello world"));
+    }
+    //
+    // let mut sat_a: CubeSat = CubeSat{ id: 0, mailbox: MailBox {messages: vec![]}};
+    // let sat_b = CubeSat{ id: 1, mailbox: MailBox {messages: vec![]}};
+    // let sat_c = CubeSat{ id: 2, mailbox: MailBox {messages: vec![]}};
+    //
+    // base.send(&mut sat_a,Message::from("hello world"));
+    // base.send(&mut sat_a,Message::from("hello world2"));
+    // println!("t1: {:?}", sat_a);
+    //
+    // let msg = sat_a.recv();
+    // println!("{:?}", msg);
 
 }

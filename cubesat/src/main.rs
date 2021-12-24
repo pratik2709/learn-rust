@@ -9,7 +9,12 @@ struct MailBox{
     messages: Vec<Message>
 }
 
-type Message = String;
+struct Message{
+    to: u64,
+    content:String
+}
+
+// type Message = String;
 
 struct GroundStation;
 

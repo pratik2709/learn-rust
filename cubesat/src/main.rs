@@ -9,6 +9,7 @@ struct MailBox{
     messages: Vec<Message>
 }
 
+#[derive(Debug)]
 struct Message{
     to: u64,
     content:String
@@ -54,7 +55,8 @@ fn main() {
     let sat_ids = fetch_sat_ids();
     for sat_id in sat_ids{
         let mut sat = base.connect(sat_id);
-        base.send(&mut sat, Message::from("hello world"));
+        let msg = Message {to: sat_id, content: String::from("hello world")};
+        base.send(&mut sat, msg);
     }
     //
     // let mut sat_a: CubeSat = CubeSat{ id: 0, mailbox: MailBox {messages: vec![]}};

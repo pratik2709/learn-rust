@@ -1,6 +1,6 @@
 use std::mem;
-// include!("static.rs");
-
+// https://gist.github.com/rylev/3a3dd4b0d8563eb2267f489e559bb70e
+include!("static.rs");
 // fn main(){
 //     execute();
 //     let a = 10;

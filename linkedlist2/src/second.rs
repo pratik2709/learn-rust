@@ -1,47 +1,26 @@
-pub struct List{
+struct List{
     head: Link
 }
 
 type Link = Option<Box<Node>>;
 
 struct Node{
-    elem: i32,
+    value: i32,
     next: Link
 }
 
 impl List{
-    pub fn new() -> Self{
+    fn new(&mut self)-> Self{
         List{
             head: None
         }
     }
 
-    pub fn push(&mut self, elem: i32){
-        let new_node = Box::new(Node{
-            elem,
-            next: self.head.take()
+    fn push(&mut self, val: i32){
+        let node = Box::new(Node{
+            value: val,
+            next: std::mem::replace(&mut self.head,None)
         });
-        self.head = Some(new_node);
-    }
-
-    pub fn pop(&mut self) -> Option<i32>{
-        match self.head.take(){
-            None => None,
-            Some(node) => {
-                self.head = node.next;
-                Some(node.elem)
-            }
-        }
-    }
-
-
-}
-
-impl Drop for List {
-    fn drop(&mut self) {
-        let mut cur_link = self.head.take();
-        while let Some(mut boxed_node) = cur_link {
-            cur_link = boxed_node.next.take();
-        }
+        self.head = Some(node);
     }
 }

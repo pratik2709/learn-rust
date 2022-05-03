@@ -1,77 +1,83 @@
-struct List<T>{
-    head: Link<T>
+struct List<T> {
+    head: Link<T>,
 }
 
 type Link<T> = Option<Box<Node<T>>>;
 
-struct Node<T>{
+struct Node<T> {
     value: T,
-    next: Link<T>
+    next: Link<T>,
 }
 
-impl<T> List<T>{
-    fn new()-> Self{
-        List{
+impl<T> List<T> {
+    fn new() -> Self {
+        List {
             head: None
         }
     }
 
-    fn push(&mut self, val: T){
-        let node = Box::new(Node{
+    fn push(&mut self, val: T) {
+        let node = Box::new(Node {
             value: val,
-            next: std::mem::replace(&mut self.head,None)
+            next: std::mem::replace(&mut self.head, None),
         });
         self.head = Some(node);
     }
 
-    fn pop(&mut self) -> Option<T>{
-        self.head.take().map(|node|{
+    fn pop(&mut self) -> Option<T> {
+        self.head.take().map(|node| {
             self.head = node.next;
             node.value
         })
     }
 
-    fn peek(&self) -> Option<&T>{
-        self.head.as_ref().map(|node|{
+    fn peek(&self) -> Option<&T> {
+        self.head.as_ref().map(|node| {
             &node.value
         })
     }
 
     //returns the first node from the list
-    fn iter(&self) -> Iter<T> {
-        Iter{
-            next: self.head.as_ref().map(|node|{
+
+}
+
+//giving stuff one at a time
+// immutable iterator instance
+// just a borrowed value so not needed on the heap therefore no box ?
+//next value should be pointing to the next node
+struct Iter<'a, T> {
+    next: Option<&'a Node<T>>,
+}
+
+impl<'a, T> List<T>{
+    fn iter(&'a self) -> Iter<'a, T> {
+        Iter {
+            next: self.head.as_ref().map(|node| {
                 &**node
             })
         }
     }
 }
 
-//giving stuff one at a time
-// immutable iterator instance
-struct Iter<'a, T>{
-    next: Option<&'a Node<T>>
+impl<'a, T> Iterator for Iter<'a, T> {
+    type Item = &'a T;
+    fn next(&mut self) -> Option<Self::Item> {
+        self.next.map(|node| {
+            self.next = node.next.as_ref().map(|node| {
+                &**node
+            });
+            &node.value
+        })
+    }
 }
-
-// impl<T> Iterator for Iter<T>{
-//     fn new(list: List<T>) -> Self{
-//         Iter{
-//             next: list.head.map(|node|{
-//                 &node
-//             })
-//         }
-//     }
-// }
-
-
 
 
 #[cfg(test)]
-mod test{
+mod test {
     use super::List;
 
     #[test]
-    fn basics(){
+    fn basics() {
         let mut list = List::new();
         list.push(1);
         list.push(2);
@@ -81,6 +87,5 @@ mod test{
         assert_eq!(list.pop(), Some(2));
         assert_eq!(list.pop(), Some(1));
         assert_eq!(list.pop(), None);
-
     }
 }

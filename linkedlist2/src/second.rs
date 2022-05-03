@@ -1,22 +1,22 @@
-struct List{
-    head: Link
+struct List<T>{
+    head: Link<T>
 }
 
-type Link = Option<Box<Node>>;
+type Link<T> = Option<Box<Node<T>>>;
 
-struct Node{
-    value: i32,
-    next: Link
+struct Node<T>{
+    value: T,
+    next: Link<T>
 }
 
-impl List{
+impl<T> List<T>{
     fn new()-> Self{
         List{
             head: None
         }
     }
 
-    fn push(&mut self, val: i32){
+    fn push(&mut self, val: T){
         let node = Box::new(Node{
             value: val,
             next: std::mem::replace(&mut self.head,None)
@@ -24,7 +24,7 @@ impl List{
         self.head = Some(node);
     }
 
-    fn pop(&mut self) -> Option<i32>{
+    fn pop(&mut self) -> Option<T>{
         match std::mem::replace(&mut self.head, None){
             None => None,
             Some(node) => {
